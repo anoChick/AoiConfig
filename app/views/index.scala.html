@@ -1,0 +1,45 @@
+@(items: List[Item], itemForm: Form[String])
+@import helper._
+
+@main("Todo list") {
+    <div class='head-border'></div>
+    <div class="container">
+    <h1>あおいコンフィグ</h1>
+    <p>僕の（架空の）アイドル「あおいちゃん」の設定を思いついたら書き留めるところ。</p>
+
+        @items.map { item =>
+        <div class='row item-container'>
+                <div class='label-wrap'>
+                @item.label
+                </div>
+                @item.vote 票
+                <div class='in-bl'>
+                @form(routes.Application.voteItem(item.id)) {
+                    <button type="submit" class="btn btn-primary">投票</button>
+                }
+                </div>
+                <div class='in-bl'>
+
+                @form(routes.Application.deleteItem(item.id)) {
+                    <button type="submit"  class="btn btn-danger">削除</button>
+                }
+                </div>
+
+        </div>
+        }
+
+<div class='row create-container'>
+    <h2>新しい設定を作る</h2>
+    
+    @form(routes.Application.newItem) {
+        
+        @inputText(itemForm("label")) 
+        
+        <button type="submit" class="btn btn-success">作成</button>
+                
+        
+    }
+    </div>
+    <p style='text-align:center;'>Copyright © 2014 anoChickWorks All Rights Reserved.</p>
+    </div>
+}
